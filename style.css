@@ -5,8 +5,12 @@
   font-size: 10px;
 }
 
-.screen2 {
+canvas {
   display: none;
+  width: 95vw;
+  height: 100vh;
+  border: 10px solid red;
+
 }
 
 .game-intro {
@@ -43,6 +47,9 @@
   height: 10%;
   display: initial;
   font-size: 4rem;
+}
+.screen2 {
+  display: none;
 }
 .map {
   background-image: url('../videogame/assets/map.jpg');
