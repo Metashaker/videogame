@@ -168,7 +168,7 @@ const startGame = () => {
   let x = canvas.width
   let y = canvas.height
 
-  if (frames % 5000  === 0 ) {
+  if (frames % 3000  === 0 ) {
     let randX = Math.floor((Math.random() * x ) + 5)
     let randY = Math.floor((Math.random() * y ) + 5)
     let randTarget = Math.floor(Math.random() * 4 )
@@ -184,17 +184,17 @@ const drawTarget = () => {
 const collision = () => {
   targets.forEach(( element => {
     let indexOfEl = targets.indexOf(element)
-    if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/good-taco.png") {
+    if (player1.isTouching(element) && element.img.src === "assets/good-taco.png") {
       targets.splice(indexOfEl, 1)
       score += 1
  
-    }else if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/good-pill.png") {
+    }else if (player1.isTouching(element) && element.img.src === "assets/good-pill.png") {
       targets.splice(indexOfEl, 1)
       score += 2
-    }else if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/bad-germ.png") {
+    }else if (player1.isTouching(element) && element.img.src === "assets/bad-germ.png") {
       targets.splice(indexOfEl, 1)
       score -= 2
-    } else if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/bad-tacoo.png") {
+    } else if (player1.isTouching(element) && element.img.src === "assets/bad-tacoo.png") {
       targets.splice(indexOfEl, 1)
       score -= 1
   }
