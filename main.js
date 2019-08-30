@@ -160,10 +160,10 @@ const startGame = () => {
  const generateTarget = () => {
    //const good = './assets/pill.png'
    //const bad = './assets/sick-taco_burned.png'
-  const yolo = ['./assets/good-pill.png', 
-  './assets/good-taco.png',
-  './assets/bad-tacoo.png',
-  './assets/bad-germ.png']
+  const yolo = ['assets/good-pill.png', 
+  'assets/good-taco.png',
+  'assets/bad-tacoo.png',
+  'assets/bad-germ.png']
 
   let x = canvas.width
   let y = canvas.height
@@ -172,7 +172,7 @@ const startGame = () => {
     let randX = Math.floor((Math.random() * x ) + 5)
     let randY = Math.floor((Math.random() * y ) + 5)
     let randTarget = Math.floor(Math.random() * 4 )
-    targets.push(new Target(yolo[randTarget].url, randX, randY))
+    targets.push(new Target(yolo[randTarget], randX, randY))
   }
 }
 
