@@ -14,7 +14,7 @@ canvas {
 }
 
 .background {
-  background-image: url('../videogame/assets/start-game-fondo.jpg');
+  background-image: url('./assets/start-game-fondo.jpg');
   background-size: cover;
   height: 100vh;
   width: 100%;
@@ -54,7 +54,7 @@ canvas {
   display: none;
   width: 1200px;
   height: 800px;
-  background-image: url(assets/taco_truck_illustration-01_2x.jpg);
+  /* background-image: url(assets/taco_truck_illustration-01_2x.jpg); */
   background-size: cover;
 
 }
