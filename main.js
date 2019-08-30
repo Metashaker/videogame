@@ -1,8 +1,9 @@
 //VARIABLEs DEFINITION
 
 //0.- Animation and  canvas
+
 let targets = []
-let score = 0
+let score = 5
 let frames = 0
 let interval
 const canvas = document.querySelector('canvas')
@@ -53,7 +54,7 @@ moveRight() {
     return this.x
   }
   right() {
-    return this.x + this.width
+    return this.x + this.width 
   }
   isTouching(target) {
     return (
@@ -70,22 +71,23 @@ class Target {
   constructor (img, x, y) {
     this.x = x
     this.y = y
-    this.height = 20
-    this.width = 20
+    this.height = 25
+    this.width = 25
     this.img = new Image()
     this.img.src = img
+    this.lifeTime = 5000
   }
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
   }
   top() {
-    return this.y
+    return this.y 
   }
   bottom() {
     return this.y + this.height
   }
   left() {
-    return this.x
+    return this.x 
   }
   right() {
     return this.x + this.width
@@ -97,8 +99,7 @@ class Target {
   }
 
 
-//Funcion que genere imagen aleatotria, y la posicione en x y y aleatoriamente
-const player1 = new Player1('assets/ness-run-right.png',10,100)
+const player1 = new Player1('assets/player1.png',10,100)
 
 //EVENT LISTENERS
 
@@ -118,6 +119,8 @@ document.onkeydown = e => {
       case 39:
         player1.moveRight()
         break;
+      case 81:
+        score = 14;
     }
   }
 
@@ -125,7 +128,7 @@ document.onkeydown = e => {
 //1.- Event 1 changes background, draws screen and Ness, and gives Ness functionality
 startButton.addEventListener('click', () => {
   //Change background and appear canvas
-  canvas.style.backgroundImage = 'url(assets/taco_truck_illustration-01_2x.jpg)'
+  canvas.style.backgroundImage = 'url(assets/output-onlinepngtools.png)'
   canvas.style.display = 'block'
   //Disappear start screen elements
   startButton.style.display = 'none'
@@ -145,25 +148,30 @@ const startGame = () => {
   interval = setInterval(gameLoop, 20)
  }
  const stopGame = () => {
+   if (score === 10) {
    clearInterval(interval)
    interval = null
+   }
  }
  
  const clearCanvas = () => {
    ctx.clearRect(0,0, canvas.width, canvas.height)
  }
  const generateTarget = () => {
-  const yolo = ['assets/pill.png',
-  'assets/sick-taco_burned.png',
-  'assets/pill.png']
+   //const good = './assets/pill.png'
+   //const bad = './assets/sick-taco_burned.png'
+  const yolo = ['assets/good-pill.png',
+  'assets/good-taco.png',
+  'assets/bad-tacoo.png',
+  'assets/bad-germ.png']
 
   let x = canvas.width
   let y = canvas.height
 
-  if (frames % 3000  === 0 ) {
+  if (frames % 5000  === 0 ) {
     let randX = Math.floor((Math.random() * x ) + 5)
     let randY = Math.floor((Math.random() * y ) + 5)
-    let randTarget = Math.floor(Math.random() * 2 )
+    let randTarget = Math.floor(Math.random() * 4 )
     targets.push(new Target(yolo[randTarget], randX, randY))
   }
 }
@@ -173,22 +181,54 @@ const drawTarget = () => {
     element.draw()
   })}
 }
-const getTarget = () => {
+const collision = () => {
   targets.forEach(( element => {
-    if (player1.isTouching(element)) {
-      targets.slice(element, 1)
+    let indexOfEl = targets.indexOf(element)
+    if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/good-taco.png") {
+      targets.splice(indexOfEl, 1)
       score += 1
-      console.log('hiiiii')
-      targets.slice(element, 1)
-    }
+ 
+    }else if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/good-pill.png") {
+      targets.splice(indexOfEl, 1)
+      score += 2
+    }else if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/bad-germ.png") {
+      targets.splice(indexOfEl, 1)
+      score -= 2
+    } else if (player1.isTouching(element) && element.img.src === "file:///home/emiliano/Documents/Ironhack/3.-Week-3/videogame/assets/bad-tacoo.png") {
+      targets.splice(indexOfEl, 1)
+      score -= 1
+  }
   }))
 }
 function drawScore() {
 
   ctx.fillStyle = 'black'
-  ctx.font = '20px Courier'
-  ctx.fillText(`Score: ${score}`, 10, 10)
+  ctx.font = '16px Courier'
+  ctx.fillText(`Score: ${score}`, 10, 20)
   }
+
+  function winScreen() {
+  
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+    canvas.style.display = 'none'
+    gameArea.backgroundColor = 'black'
+    document.querySelector('.background > img').style.display = 'block'
+    document.querySelector('.background > h1').innerHTML = 'YOU WIN!!'
+    document.querySelector('.background > h1').style.fontSize = '10rem'
+    document.querySelector('.background > h1').style.padding = '50px 0 0 0'
+    document.querySelector('.background > h1').style.display = 'block'
+    document.querySelector('.background > h1').style.padding = '50px 0 0 0' 
+    document.querySelector('.background > h2').innerHTML = 'Press ctrl + r to play again'
+    document.querySelector('.background > h2').style.display = 'block'  
+    clearInterval(interval)
+
+}
+
+function youWin() {
+    if (score >= 15) {
+        return winScreen()
+    }
+}
 
 
 
@@ -199,11 +239,10 @@ function gameLoop() {
       player1.draw()
       generateTarget()
       drawTarget()
-      getTarget()
+      collision()
       drawScore()
-
-    //drawObstacles()
-    //updateObstacles()
+      stopGame()
+      youWin()
     }
 
 
